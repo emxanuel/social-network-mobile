@@ -4,8 +4,11 @@ import StyledText from './StyledText'
 import { Link } from 'react-router-native'
 import Constants from 'expo-constants'
 import { containerDimensions } from '../styles/standar'
+import { useUserContext } from './UserContext'
 
 const Home = () => {
+    const user = useUserContext();
+    console.log(user)
     return (
         <View style={styles.container}>
             <StyledText big bold><Text>Welcome to SN</Text></StyledText>

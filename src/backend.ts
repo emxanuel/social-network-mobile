@@ -1,4 +1,4 @@
-const server = "http://localhost:80";
-const wsServer = "ws://localhost:80";
+const server = "https://my-api-rest.onrender.com";
+const wsServer = "wss://my-api-rest.onrender.com";
 
 export { server, wsServer };
