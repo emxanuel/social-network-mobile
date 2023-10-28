@@ -13,12 +13,20 @@ export type message = {
 const getChat = async (
     user: number,
     friend: number,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
     setChat?: React.Dispatch<React.SetStateAction<message[]>>
 ) => {
-    const request = await axios.post(`${server}/api/chat/${user}/${friend}`);
-    if (request.status === 200) {
-        console.log(request.data);
-        setChat(request.data);
+    try{
+        const request = await axios.get(`${server}/api/chat/${user}/${friend}`);
+        if (request.status === 200) {
+            setChat(request.data);
+        }
+    }
+    catch(e){
+        console.log(e)
+    }
+    finally{
+        setLoading(false)
     }
 };
 

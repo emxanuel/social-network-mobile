@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Dimensions, StyleSheet } from "react-native";
 import Navbar from "./Navbar";
+import AppBar from "./AppBar";
 
 interface props {
     Comp: React.ComponentType;
@@ -8,9 +9,10 @@ interface props {
 
 const Layout: React.FC<props> = ({ Comp }) => {
     return (
-        <View style = {styles.container}>
-            <Navbar />
+        <View style={styles.container}>
+            <AppBar />
             <Comp />
+            <Navbar />
         </View>
     );
 };

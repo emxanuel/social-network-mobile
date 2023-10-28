@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
 
 const styles = StyleSheet.create({
     text: {
@@ -35,12 +35,14 @@ interface props{
     medium?: boolean,
     blue?: boolean,
     center?: boolean,
-    xl?: boolean
+    xl?: boolean,
+    style?: StyleProp<ViewStyle>
     children: JSX.Element
 }
 
-const StyledText: React.FC<props> = ({ bold, white, big, medium, blue, center, children, xl }) => {
+const StyledText: React.FC<props> = ({ bold, white, big, medium, blue, center, children, xl, style }) => {
     const textStyles = [
+        style,
         styles.text,
         bold && styles.bold,
         white && styles.white,

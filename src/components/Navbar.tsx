@@ -4,9 +4,10 @@ import Constants from 'expo-constants'
 import { Link, useNavigate } from 'react-router-native'
 import StyledText from './StyledText'
 import { useUserContext, userDefault, saveContext } from './UserContext'
+import { Icon } from '@rneui/themed'
 
 const Navbar = () => {
-    const { user } = useUserContext();
+    const { user, setUser } = useUserContext();
     const navigate = useNavigate()
     return (
         <View style={styles.container}>
@@ -18,20 +19,29 @@ const Navbar = () => {
                     alignItems: 'center',
                     width: '100%'
                 }}>
-                    <View>
-                        <Link to='/'><StyledText big white bold><Text>SN</Text></StyledText></Link>
-                    </View>
                     <View style={{
                         flexDirection: "row",
-                        gap: 15
+                        justifyContent: 'space-evenly',
+                        width: '100%'
                     }}>
-                        <Link to='/contacts'><StyledText white><Text>Contacts</Text></StyledText></Link>
-                        <Link to='/search'><StyledText white><Text>Search</Text></StyledText></Link>
-                        <Link to='/requests'><StyledText white><Text>Requests</Text></StyledText></Link>
-                        <TouchableHighlight onPress={() => {
-                            saveContext(userDefault)
-                            navigate('/')
-                        }}><StyledText white><Text>Logout</Text></StyledText></TouchableHighlight>
+                        <Link to='/contacts'>
+                            <View style={styles.button}>
+                                <Icon reverse name='users' type='feather' />
+                                <StyledText white><Text>Contacts</Text></StyledText>
+                            </View>
+                        </Link>
+                        <Link to='/search'>
+                            <View style={styles.button}>
+                                <Icon reverse name='search' type='feather' />
+                                <StyledText white><Text>Search</Text></StyledText>
+                            </View>
+                        </Link>
+                        <Link to='/requests'>
+                            <View style={styles.button}>
+                                <Icon reverse name='adduser' type='ant-design' />
+                                <StyledText white><Text>Requests</Text></StyledText>
+                            </View>
+                        </Link>
                     </View>
                 </View>
             ) : (
@@ -60,9 +70,15 @@ const Navbar = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#0871a8', flexDirection: 'row', width: Dimensions.get('screen').width,
-        alignItems: "center", justifyContent: "space-around", height: 45,
-        position: 'absolute', marginTop: Constants.statusBarHeight
+        backgroundColor: '#0871a8',
+        flexDirection: 'row',
+        width: Dimensions.get('screen').width,
+        alignItems: "center",
+        justifyContent: "space-around",
+        height: 90
+    },
+    button: {
+        alignItems: 'center'
     }
 })
 

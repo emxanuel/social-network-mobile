@@ -30,7 +30,7 @@ export default function App() {
                     <Route path="/contacts" element={<Layout Comp={Contacts}/>}/>
                     <Route path="/search" element={<Layout Comp={Search}/>}/>
                     <Route path="/requests" element={<Layout Comp={Requests}/>}/>
-                    <Route path="/chat/:id" element={<Layout Comp={Chat}/>}/>
+                    <Route path="/chat/:id" element={<Chat />}/>
                 </Routes>
             </NativeRouter>
         </UserProvider>

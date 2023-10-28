@@ -55,26 +55,40 @@ const userReducer = (state: userState, action: userActions) => {
             return {
                 ...state = action.payload,
             }
-        default: 
+        default:
             return state;
     }
 }
 
 const UserProvider: React.FC<Props> = ({ children }) => {
+    useEffect(() => {
+        async function initUser() {
+            try {
+                const userJSON = await AsyncStorage.getItem('user');
+                const savedUser = userJSON ? JSON.parse(userJSON) : userDefault;
+                userDispatch({ type: Actions.SET_USER, payload: savedUser });
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        initUser()
+    }, [])
+    
     const [user, userDispatch] = useReducer(userReducer, userDefault)
 
     const setUser = (user: userState) => {
-        userDispatch({type: Actions.SET_USER, payload: user})
+        userDispatch({ type: Actions.SET_USER, payload: user })
     }
 
     return (
-        <userContext.Provider value={{user: user, setUser}}>
+        <userContext.Provider value={{ user: user, setUser }}>
             {children}
         </userContext.Provider>
     );
 }
 
-const saveContext = (user: UserData) => { console.log(user); AsyncStorage.setItem('user', JSON.stringify(user)) }
+const saveContext = (user: UserData) => { AsyncStorage.setItem('user', JSON.stringify(user)) }
 
 const useUserContext = () => { return useContext(userContext); }
 
