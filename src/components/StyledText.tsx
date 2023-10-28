@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     big: {
         fontSize: 20
     },
+    xl: {
+        fontSize: 24
+    },
     medium: {
         fontSize: 16
     },
@@ -31,11 +34,12 @@ interface props{
     big?: boolean,
     medium?: boolean,
     blue?: boolean,
-    center?: boolean
+    center?: boolean,
+    xl?: boolean
     children: JSX.Element
 }
 
-const StyledText: React.FC<props> = ({ bold, white, big, medium, blue, center, children }) => {
+const StyledText: React.FC<props> = ({ bold, white, big, medium, blue, center, children, xl }) => {
     const textStyles = [
         styles.text,
         bold && styles.bold,
@@ -43,7 +47,8 @@ const StyledText: React.FC<props> = ({ bold, white, big, medium, blue, center, c
         big && styles.big,
         medium && styles.medium,
         blue && styles.blue,
-        center && styles.center
+        center && styles.center,
+        xl && styles.xl
     ]
 
     return(

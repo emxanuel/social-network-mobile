@@ -1,8 +1,24 @@
-import React, { useContext, createContext, useEffect, useState } from 'react'
+import React, { useContext, createContext, useEffect, useState, useReducer } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface Props {
     children: JSX.Element
+}
+
+enum Actions {
+    SET_USER = "SET_USER"
+}
+
+interface userActions {
+    type: Actions,
+    payload: UserData
+}
+
+type userState = UserData
+
+type userContextType = {
+    user: UserData,
+    setUser: (user: userState) => void
 }
 
 export type UserData = {
@@ -17,17 +33,7 @@ export type UserData = {
     is_active: boolean,
 };
 
-const userContext = createContext<UserData>({
-    id: 0,
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    birthdate: "",
-    gender: "",
-    profile_picture: "",
-    is_active: false
-});
+const userContext = createContext<userContextType | undefined>(undefined)
 
 export const userDefault: UserData = {
     id: 0,
@@ -41,29 +47,28 @@ export const userDefault: UserData = {
     is_active: false
 }
 
-const UserProvider: React.FC<Props> = ({ children }) => {
-    const [user, setUser] = useState<UserData | null>(null);
 
-    useEffect(() => {
-        const loadUser = async () => {
-            try {
-                const storedUser = await AsyncStorage.getItem('user');
-                if (storedUser !== null) {
-                    setUser(JSON.parse(storedUser));
-                } else {
-                    setUser(userDefault);
-                }
-            } catch (error) {
-                console.error('Error loading user data from AsyncStorage:', error);
-                setUser(userDefault);
+const userReducer = (state: userState, action: userActions) => {
+    switch (action.type) {
+        case Actions.SET_USER:
+            saveContext(action.payload)
+            return {
+                ...state = action.payload,
             }
-        };
+        default: 
+            return state;
+    }
+}
 
-        loadUser();
-    }, []);
+const UserProvider: React.FC<Props> = ({ children }) => {
+    const [user, userDispatch] = useReducer(userReducer, userDefault)
+
+    const setUser = (user: userState) => {
+        userDispatch({type: Actions.SET_USER, payload: user})
+    }
 
     return (
-        <userContext.Provider value={user || userDefault}>
+        <userContext.Provider value={{user: user, setUser}}>
             {children}
         </userContext.Provider>
     );

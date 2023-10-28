@@ -9,6 +9,7 @@ import { UserProvider } from "./src/components/UserContext";
 import Contacts from "./src/pages/Contacts";
 import Search from "./src/pages/Search";
 import Requests from "./src/pages/Requests";
+import Chat from "./src/pages/Chat";
 
 const STATUSBAR_HEIGHT = Constants.statusBarHeight;
 
@@ -29,6 +30,7 @@ export default function App() {
                     <Route path="/contacts" element={<Layout Comp={Contacts}/>}/>
                     <Route path="/search" element={<Layout Comp={Search}/>}/>
                     <Route path="/requests" element={<Layout Comp={Requests}/>}/>
+                    <Route path="/chat/:id" element={<Layout Comp={Chat}/>}/>
                 </Routes>
             </NativeRouter>
         </UserProvider>

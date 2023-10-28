@@ -6,7 +6,7 @@ import StyledText from './StyledText'
 import { useUserContext, userDefault, saveContext } from './UserContext'
 
 const Navbar = () => {
-    const user = useUserContext();
+    const { user } = useUserContext();
     const navigate = useNavigate()
     return (
         <View style={styles.container}>
@@ -22,7 +22,7 @@ const Navbar = () => {
                         <Link to='/'><StyledText big white bold><Text>SN</Text></StyledText></Link>
                     </View>
                     <View style={{
-                        flexDirection: "row", 
+                        flexDirection: "row",
                         gap: 15
                     }}>
                         <Link to='/contacts'><StyledText white><Text>Contacts</Text></StyledText></Link>
@@ -36,7 +36,7 @@ const Navbar = () => {
                 </View>
             ) : (
                 <View style={{
-                    flexDirection: "row", 
+                    flexDirection: "row",
                     alignItems: 'center',
                     justifyContent: 'space-around',
                     width: '100%'

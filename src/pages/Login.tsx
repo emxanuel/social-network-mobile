@@ -4,9 +4,11 @@ import StyledText from "../components/StyledText";
 import { containerDimensions } from "../styles/standar";
 import { login } from "../functions/users";
 import { useNavigate } from "react-router-native";
+import { useUserContext } from "../components/UserContext";
 
 const Login = () => {
     const [email, setEmail] = useState('')
+    const { setUser } = useUserContext()
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
     return (
@@ -19,13 +21,13 @@ const Login = () => {
 
                 <View style={styles.inputsContainer}>
                     <StyledText medium bold><Text>Email</Text></StyledText>
-                    <TextInput placeholder="Email Address" style={styles.input} onChangeText={(e) => setEmail(e)} />
+                    <TextInput placeholder="Email Address" keyboardType="email-address" style={styles.input} onChangeText={(e) => setEmail(e)} />
                     <StyledText medium bold><Text>Password</Text></StyledText>
-                    <TextInput placeholder="Password" secureTextEntry style={styles.input} 
-                    onChangeText={text => setPassword(text)} /> 
+                    <TextInput placeholder="Password" secureTextEntry style={styles.input}
+                        onChangeText={text => setPassword(text)} />
                 </View>
                 <TouchableHighlight style={styles.button} onPress={() => {
-                    login(email, password, navigate)
+                    login(email, password, navigate, setUser)
                 }}><StyledText center><Text>Login</Text></StyledText></TouchableHighlight>
             </View>
         </View>
