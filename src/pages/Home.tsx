@@ -8,7 +8,7 @@ import { useUserContext } from '../components/UserContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Home = () => {
-    const user = useUserContext();
+    const {user} = useUserContext();
     return (
         <View style={styles.container}>
             {user.id !== 0 ? (
