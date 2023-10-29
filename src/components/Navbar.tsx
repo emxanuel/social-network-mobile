@@ -24,21 +24,21 @@ const Navbar = () => {
                         justifyContent: 'space-evenly',
                         width: '100%'
                     }}>
-                        <Link to='/contacts'>
+                        <Link underlayColor={'transparent'} to='/contacts'>
                             <View style={styles.button}>
-                                <Icon reverse name='users' type='feather' />
+                                <Icon color={'#fff'} style={styles.icon} name='users' type='feather' />
                                 <StyledText white><Text>Contacts</Text></StyledText>
                             </View>
                         </Link>
-                        <Link to='/search'>
+                        <Link underlayColor={'transparent'} to='/search'>
                             <View style={styles.button}>
-                                <Icon reverse name='search' type='feather' />
+                                <Icon color={"#fff"} style={styles.icon} name='search' type='feather' />
                                 <StyledText white><Text>Search</Text></StyledText>
                             </View>
                         </Link>
-                        <Link to='/requests'>
+                        <Link underlayColor={'transparent'} to='/requests'>
                             <View style={styles.button}>
-                                <Icon reverse name='adduser' type='ant-design' />
+                                <Icon color={'#fff'} style={styles.icon} name='adduser' type='ant-design' />
                                 <StyledText white><Text>Requests</Text></StyledText>
                             </View>
                         </Link>
@@ -52,14 +52,14 @@ const Navbar = () => {
                     width: '100%'
                 }}>
                     <View>
-                        <Link to='/'><StyledText big white bold><Text>SN</Text></StyledText></Link>
+                        <Link underlayColor={'transparent'} to='/'><StyledText big white bold><Text>SN</Text></StyledText></Link>
                     </View>
                     <View style={{
                         flexDirection: "row", justifyContent: 'space-between',
                         width: 180
                     }}>
-                        <Link to='/login'><StyledText white><Text>Login</Text></StyledText></Link>
-                        <Link to='/register'><StyledText white><Text>Register</Text></StyledText></Link>
+                        <Link underlayColor={'transparent'} to='/login'><StyledText white><Text>Login</Text></StyledText></Link>
+                        <Link underlayColor={'transparent'} to='/register'><StyledText white><Text>Register</Text></StyledText></Link>
                     </View>
                 </View>
             )}
@@ -75,10 +75,14 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width,
         alignItems: "center",
         justifyContent: "space-around",
-        height: 90
+        height: 80
     },
     button: {
         alignItems: 'center'
+    },
+    icon:{
+        padding: 5,
+        borderRadius: 100
     }
 })
 

@@ -36,7 +36,7 @@ const Login = () => {
 
 const styles = StyleSheet.create({
     container: {
-        height: containerDimensions.dimensions.height,
+        height: Dimensions.get('window').height - 80,
         width: containerDimensions.dimensions.width,
         marginTop: containerDimensions.dimensions.marginTop,
         justifyContent: 'center',

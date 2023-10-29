@@ -8,17 +8,17 @@ import { Dimensions } from 'react-native'
 import { containerDimensions } from '../styles/standar'
 
 const AppBar = () => {
-    const { setUser } = useUserContext()
-    const navigate = useNavigate()
+    const { user, setUser } = useUserContext()
     return (
-        <View style={styles.container}>
-            <View>
-                <Link to='/'><StyledText big white bold><Text>SN</Text></StyledText></Link>
+        <View style={user.id === 0 ? { display: 'none' } : {}}>
+            <View style={styles.container}>
+                <View>
+                    <Link underlayColor={'transparent'} to='/'><StyledText big white bold><Text>SN</Text></StyledText></Link>
+                </View>
+                <Link underlayColor={'transparent'} to={'/'} onPress={() => {
+                    setUser(userDefault)
+                }}><StyledText white><Text>Logout</Text></StyledText></Link>
             </View>
-            <TouchableHighlight onPress={() => {
-                setUser(userDefault)
-                navigate('/')
-            }}><StyledText white><Text>Logout</Text></StyledText></TouchableHighlight>
         </View>
     )
 }

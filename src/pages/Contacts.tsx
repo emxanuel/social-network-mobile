@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableHighlight } from "react-native"
+import { Text, View, StyleSheet, ScrollView } from "react-native"
 import { Link } from "react-router-native"
 import { getContacts } from "../functions/users"
 import { useEffect, useState } from 'react'
@@ -6,6 +6,9 @@ import { UserData } from "../components/UserContext"
 import { useUserContext } from "../components/UserContext"
 import StyledText from "../components/StyledText"
 import { containerDimensions } from "../styles/standar"
+import CSkeleton from "../components/Skeleton"
+import { TMessage } from "../components/Message"
+import Contact from "../components/Contact"
 
 const Contacts = () => {
     const [contacts, setContacts] = useState<UserData[]>([])
@@ -20,19 +23,21 @@ const Contacts = () => {
         <View style={styles.container}>
             <StyledText big bold><Text style={styles.title}>Contacts</Text></StyledText>
             {loading ? (
-                <Text>Loading...</Text>
-            ) : (
-                <View style={styles.contacts}>
-                    {contacts.map((c) => (
-                        <Link to={`/chat/${c.id}`} key={c.id} style={styles.contact}>
-                            <StyledText medium>
-                                <Text>
-                                    {`${c.first_name} ${c.last_name}`}
-                                </Text>
-                            </StyledText>
-                        </Link>
-                    ))}
+                <View>
+                    <CSkeleton type='contacts'/>
+                    <CSkeleton type='contacts'/>
+                    <CSkeleton type='contacts'/>
+                    <CSkeleton type='contacts'/>
+                    <CSkeleton type='contacts'/>
+                    <CSkeleton type='contacts'/>
+                    <CSkeleton type='contacts'/>
                 </View>
+            ) : (
+                <ScrollView style={styles.contacts}>
+                    {contacts.map((c) => (
+                        <Contact friend={c} key={c.id}/>
+                    ))}
+                </ScrollView>
             )}
 
         </View>
@@ -49,11 +54,6 @@ const styles = StyleSheet.create({
     contacts: {
         alignSelf: 'center',
         gap: 2
-    },
-    contact: {
-        width: containerDimensions.dimensions.width,
-        height: 40,
-        borderBottomWidth: 1
     },
     title: {
         borderBottomWidth: 1,

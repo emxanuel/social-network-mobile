@@ -46,7 +46,7 @@ const Register = () => {
 const styles = StyleSheet.create({
     container: {
         width: containerDimensions.dimensions.width,
-        height: containerDimensions.dimensions.height,
+        height: Dimensions.get('window').height - 80,
         marginTop: containerDimensions.dimensions.marginTop,
         justifyContent: 'center',
         alignItems: 'center',

@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const Home = () => {
     const {user} = useUserContext();
     return (
-        <View style={styles.container}>
+        <View style={user.id === 0 ? styles.containerUnlogged : styles.container}>
             {user.id !== 0 ? (
                 <View style={{
                     display: 'flex',
@@ -48,6 +48,13 @@ const Home = () => {
 const styles = StyleSheet.create({
     container: {
         height: containerDimensions.dimensions.height,
+        width: containerDimensions.dimensions.width,
+        marginTop: containerDimensions.dimensions.marginTop,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    containerUnlogged: {
+        height: Dimensions.get('window').height - 80,
         width: containerDimensions.dimensions.width,
         marginTop: containerDimensions.dimensions.marginTop,
         alignItems: 'center',

@@ -20,8 +20,8 @@ const Message: React.FC<TProps> = ({ info, styles }) => {
     const date = new Date(info.date_sent).toLocaleTimeString('en-us', { hour: '2-digit', minute: "2-digit" })
     return (
         <View style={styles}>
-            <StyledText><Text>{info.content}</Text></StyledText>
-            <StyledText><Text>{date}</Text></StyledText>
+            <StyledText medium><Text>{info.content}</Text></StyledText>
+            <StyledText style={{alignSelf: 'flex-end', marginTop: 10, opacity: 0.3}}><Text>{date}</Text></StyledText>
         </View>
     )
 }

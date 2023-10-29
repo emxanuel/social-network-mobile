@@ -5,13 +5,14 @@ import { UserData } from '../components/UserContext';
 import { View, Text, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView } from 'react-native';
 import { containerDimensions } from '../styles/standar';
 import StyledText from '../components/StyledText';
-import { getChat } from '../functions/chat';
+import { getChat, sendMessage } from '../functions/chat';
 import { useUserContext } from '../components/UserContext';
 import Message, { TMessage } from '../components/Message';
-import { Icon } from '@rneui/themed';
+import { Icon, Skeleton } from '@rneui/themed';
 import { Link } from 'react-router-native';
 import { Dimensions } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native';
+import CSkeleton from '../components/Skeleton';
 
 const Chat = () => {
     const [friend, setFriend] = useState<UserData>();
@@ -19,11 +20,13 @@ const Chat = () => {
     const { user } = useUserContext();
     const [chat, setChat] = useState<TMessage[]>([]);
     const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState('')
     const scrollViewRef = useRef<ScrollView | null>();
+    const messagesInput = useRef<TextInput>()
 
     useEffect(() => {
         getUserById(parseInt(params.id), setFriend).then((r) => {
-            getChat(user.id, r.id, setLoading, setChat);
+            getChat(user.id, r.id, setChat, setLoading);
         });
     }, []);
 
@@ -55,9 +58,7 @@ const Chat = () => {
                         onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
                     >
                         {loading ? (
-                            <View>
-                                <Text>Loading...</Text>
-                            </View>
+                            <CSkeleton type='chat'/>
                         ) : (
                             chat.map((message) => (
                                 <View key={message.id}>
@@ -74,10 +75,13 @@ const Chat = () => {
                         )}
                     </ScrollView>
                     <View style={styles.inputContainer}>
-                        <TextInput style={styles.textInput} placeholder='write your message' />
+                        <TextInput ref={messagesInput} onChangeText={text => {
+                            setMessage(text)
+                        }} style={styles.textInput} placeholder='write your message' />
                         <TouchableWithoutFeedback
                             onPress={() => {
-                                alert('Button Clicked!')
+                                sendMessage(message, user.id, friend.id, setChat)
+                                messagesInput.current.clear()
                             }}
                         >
                             <Icon style={{padding: 7}} borderRadius={100} color={'#fff'} backgroundColor={'#0871a8'} name='send' type='feather' />
@@ -85,10 +89,16 @@ const Chat = () => {
                     </View>
                 </View>
             ) : (
-                <View>
-                    <StyledText bold medium>
-                        <Text>Loading...</Text>
-                    </StyledText>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        width: containerDimensions.dimensions.width,
+                        paddingHorizontal: 20
+                    }}
+                >
+                    <Link to={'/contacts'}><Icon type='feather' name='arrow-left-circle'></Icon></Link>
+                    <Skeleton style={{marginLeft: 20}} width={200} height={20}/>
                 </View>
             )}
         </KeyboardAvoidingView>
@@ -112,7 +122,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 5,
         paddingHorizontal: 10,
+        marginVertical: 10,
         alignSelf: 'flex-start',
+        backgroundColor: '#ddddee'
     },
     sendedMessage: {
         maxWidth: 240,
@@ -122,6 +134,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 5,
         paddingHorizontal: 10,
+        marginVertical: 10,
         alignSelf: 'flex-end',
     },
     chatContainer: {
